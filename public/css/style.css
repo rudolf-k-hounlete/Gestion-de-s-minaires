@@ -1,0 +1,336 @@
+/* =========================================================
+   RESET / BASE
+   On fait un reset léger pour homogénéiser margin/padding
+   ========================================================= */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+html, body {
+  margin: 0;
+  padding: 0;
+  font-family: Arial, Helvetica, sans-serif;
+  line-height: 1.5;
+  background-color: #f5f5f5;
+  color: #333;
+}
+a {
+  color: #3b82f6; /* bleu modéré */
+  text-decoration: none;
+}
+a:hover {
+  text-decoration: underline;
+}
+
+/* =========================================================
+   NAVBAR PRINCIPALE (fixée en haut)
+   ========================================================= */
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 60px;
+  background-color: #ffffff;
+  border-bottom: 1px solid #e5e7eb;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 20px;
+  z-index: 1000;
+}
+.navbar .logo {
+  font-size: 1.25rem;
+  font-weight: bold;
+  color: #2563eb;
+}
+.navbar .nav-right {
+  display: flex;
+  align-items: center;
+}
+.navbar .nav-right span {
+  margin-right: 20px;
+  color: #4b5563;
+}
+.navbar button.logout-btn {
+  background: none;
+  border: none;
+  color: #dc2626;
+  font-size: 0.95rem;
+  cursor: pointer;
+}
+.navbar button.logout-btn:hover {
+  color: #b91c1c;
+}
+
+/* =========================================================
+   CONTENEUR GLOBAL
+   Left sidebar + main content, en dessous de la navbar
+   ========================================================= */
+.container {
+  display: flex;
+  padding-top: 60px; /* pour laisser la place à la navbar */
+  min-height: calc(100vh - 60px);
+}
+
+/* =========================================================
+   SIDEBAR (visibilité conditionnelle en Blade, js pour toggle)
+   ========================================================= */
+.sidebar {
+  width: 240px;
+  background-color: #ffffff;
+  border-right: 1px solid #e5e7eb;
+  padding-top: 20px;
+  position: fixed;
+  top: 60px;
+  bottom: 0;
+  left: 0;
+  transform: translateX(-260px);
+  transition: transform 0.3s ease;
+  z-index: 900;
+}
+.sidebar.open {
+  transform: translateX(0);
+}
+.sidebar nav a {
+  display: block;
+  padding: 12px 20px;
+  font-size: 0.95rem;
+  color: #374151;
+  border-radius: 4px;
+  margin: 4px 12px;
+}
+.sidebar nav a:hover {
+  background-color: #f3f4f6;
+}
+
+/* Masque l’overlay (fond semi‐transparent) par défaut */
+.overlay {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: none;
+  z-index: 800;
+}
+
+/* =========================================================
+   MAIN CONTENT
+   ========================================================= */
+.main-content {
+  flex: 1;
+  margin-left: 0; /* par défaut on ne décale pas si sidebar fermée */
+  padding: 20px;
+  transition: margin-left 0.3s ease;
+}
+.main-content.with-sidebar {
+  margin-left: 240px;
+}
+
+/* =========================================================
+   FLASH MESSAGE (success)
+   ========================================================= */
+.flash-success {
+  background-color: #dcfce7;
+  border: 1px solid #bbf7d0;
+  color: #166534;
+  padding: 12px 16px;
+  border-radius: 4px;
+  margin-bottom: 20px;
+  position: relative;
+  animation: fadeOut 0.5s ease 5s forwards; /* disparaît après 5s */
+}
+@keyframes fadeOut {
+  to {
+    opacity: 0;
+    max-height: 0;
+    padding: 0 16px;
+    margin-bottom: 0;
+  }
+}
+
+/* =========================================================
+   CARDS & BLOCS (pour listes de séminaires, formulaires, etc.)
+   ========================================================= */
+.card {
+  background-color: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  padding: 16px;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+  transition: box-shadow 0.2s ease;
+  margin-bottom: 16px;
+}
+.card:hover {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+.card-header {
+  font-size: 1.125rem;
+  font-weight: 600;
+  margin-bottom: 8px;
+  color: #111827;
+}
+.card-text {
+  font-size: 0.95rem;
+  color: #4b5563;
+}
+
+/* =========================================================
+   BOUTONS & FORMULAIRES
+   ========================================================= */
+.btn {
+  display: inline-block;
+  font-size: 0.95rem;
+  font-weight: 500;
+  padding: 8px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  text-align: center;
+  border: none;
+}
+.btn-primary {
+  background-color: #2563eb;
+  color: #ffffff;
+}
+.btn-primary:hover {
+  background-color: #1e40af;
+}
+.btn-secondary {
+  background-color: #10b981;
+  color: #ffffff;
+}
+.btn-secondary:hover {
+  background-color: #047857;
+}
+.btn-warning {
+  background-color: #f59e0b;
+  color: #ffffff;
+}
+.btn-warning:hover {
+  background-color: #b45309;
+}
+.btn-disabled {
+  background-color: #d1d5db;
+  color: #6b7280;
+  cursor: not-allowed;
+}
+
+/* Inputs, selects, file inputs */
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="date"],
+select,
+textarea {
+  width: 100%;
+  padding: 8px 12px;
+  border: 1px solid #d1d5db;
+  border-radius: 4px;
+  font-size: 0.95rem;
+  color: #111827;
+  margin-top: 4px;
+  margin-bottom: 8px;
+  transition: border-color 0.2s ease;
+}
+input[type="text"]:focus,
+input[type="email"]:focus,
+input[type="password"]:focus,
+input[type="date"]:focus,
+select:focus,
+textarea:focus {
+  outline: none;
+  border-color: #2563eb;
+}
+
+/* =========================================================
+   FORMULAIRES (container) 
+   ========================================================= */
+.form-container {
+  background-color: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  padding: 20px;
+  max-width: 500px;
+  margin: auto;
+}
+
+/* =========================================================
+   GRILLES RÉPONSIVES POUR ÉTUDIANTS
+   ========================================================= */
+.grid-2 {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+}
+@media (min-width: 768px) {
+  .grid-2 {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+/* =========================================================
+   MODALE SIMPLIFIÉE
+   ========================================================= */
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(0,0,0,0.5);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 1001;
+}
+.modal-backdrop.open {
+  display: flex;
+}
+.modal {
+  background-color: #ffffff;
+  border-radius: 8px;
+  max-width: 400px;
+  width: 90%;
+  padding: 16px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  animation: slideDown 0.3s ease-out;
+}
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* =========================================================
+   TELECHARGEMENTS (lien download)
+   ========================================================= */
+.download-link {
+  display: inline-block;
+  margin-top: 8px;
+  font-size: 0.95rem;
+  color: #10b981;
+}
+.download-link:hover {
+  text-decoration: underline;
+}
+
+/* =========================================================
+   TEXTE EN GRIS POUR MESSAGES D'INFO
+   ========================================================= */
+.text-gray {
+  color: #6b7280;
+}
+
+/* =========================================================
+   UTILITAIRES DIVERS
+   ========================================================= */
+.mt-4 { margin-top: 1rem; }
+.mb-4 { margin-bottom: 1rem; }
+.p-4  { padding: 1rem; }
+.text-center { text-align: center; }
+.font-bold    { font-weight: 700; }
+
+/* Fin du style natif */

@@ -1,0 +1,24 @@
+/* --------------------------------------------------
+   resources/css/app.css
+   Fichier principal chargé par Vite. Place ici :
+   - Imports de polices (Google Fonts, etc.)
+   - Réinitialisations globales (optionnel)
+   - Toute règle globale ou utilitaire commune
+   -------------------------------------------------- */
+
+/* Import de la police Poppins depuis Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+/* Reset simple (vous pouvez adapter ou étendre)
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Appliquer la police Poppins partout 
+body {
+  font-family: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  color: #3a4a5c;           
+  line-height: 1.55;
+} */
